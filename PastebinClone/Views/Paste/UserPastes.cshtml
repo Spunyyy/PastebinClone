@@ -1,0 +1,39 @@
+﻿@model List<PastebinClone.Models.Paste>
+@{
+	ViewData["Title"] = "Index";
+}
+
+<h3>Index</h3>
+
+<table class="table">
+	<thead>
+		<tr>
+			<th>URL</th>
+			<th>Text</th>
+			<th>Expiration</th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var item in Model)
+		{
+			<tr>
+				<td>
+					<a asp-action="Content" asp-route-urlId="@item.UrlID">@item.UrlID</a>
+				</td>
+				<td>@item.Text</td>
+				<td>@item.ExpirationDate.ToString()</td>
+				<td>
+					<div class="d-flex gap-2">
+						<form asp-controller="Paste" asp-action="ExtendPaste" asp-route-urlId="@item.UrlID" method="post">
+							<button type="submit" class="btn btn-link p-0">Extend</button>
+						</form>
+						<form asp-controller="Paste" asp-action="DeletePaste" asp-route-urlId="@item.UrlID" method="post">
+							<button type="submit" class="btn btn-link p-0">Delete</button>
+						</form>
+					</div>
+				</td>
+			</tr>
+		}
+	</tbody>
+
+</table>
